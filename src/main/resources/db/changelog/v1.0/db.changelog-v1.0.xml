@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="2021-09-10-01" author="bulat.gimazov">
+        <createSequence sequenceName="cat_seq"/>
+        <createTable tableName="cat" remarks="Кот">
+            <column name="id" type="bigint" defaultValueComputed="nextval('cat_seq')">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)" remarks="Имя кота">
+                <constraints nullable="false"/>
+            </column>
+            <column name="picture_id" type="bigint" remarks="Идентификатор картинки">
+                <constraints nullable="false"/>
+            </column>
+            <column name="likes" type="int" remarks="Сколько человек лайкнуло">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addDefaultValue catalogName="cat"
+                         columnDataType="int"
+                         columnName="likes"
+                         defaultValue="0"
+                         tableName="cat"/>
+        <loadData tableName="cat"
+                  file="db/changelog/v1.0/data/csv/cat-v1.csv"
+                  separator=";"
+                  relativeToChangelogFile="false"/>
+    </changeSet>
+
+    <changeSet id="2021-09-10-02" author="bulat.gimazov">
+        <createSequence sequenceName="file_definition_seq"/>
+        <createTable tableName="file_definition" remarks="Файлы">
+            <column name="id" type="bigint" defaultValueComputed="nextval('file_definition_seq')">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="original_name" type="varchar(255)" remarks="Имя кота">
+                <constraints nullable="false"/>
+            </column>
+            <column name="public_guid" type="UUID" remarks="Публичный гуид">
+                <constraints nullable="false"/>
+            </column>
+            <column name="extension" type="varchar(255)" remarks="Тип файла">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <loadData tableName="file_definition"
+                  file="db/changelog/v1.0/data/csv/file_definition-v1.csv"
+                  separator=";"
+                  relativeToChangelogFile="false"/>
+    </changeSet>
+
+    <changeSet id="2021-09-10-03" author="bulat.gimazov">
+        <createSequence sequenceName="user_seq"/>
+        <createTable tableName="user" remarks="Юзеры">
+            <column name="id" type="bigint" defaultValueComputed="nextval('user_seq')">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="varchar(255)" remarks="Юзернейм">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)" remarks="Пароль">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="varchar(255)" remarks="Роль">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="2021-09-10-04" author="bulat.gimazov">
+        <createSequence sequenceName="users_cat_choice_seq"/>
+        <createTable tableName="users_cat_choice" remarks="Юзеры">
+            <column name="id" type="bigint" defaultValueComputed="nextval('users_cat_choice_seq')">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="bigint" remarks="Юзер">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cat1_id" type="bigint" remarks="Первый кот">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cat2_id" type="bigint" remarks="Второй кот">
+                <constraints nullable="false"/>
+            </column>
+            <column name="chosen_cat_id" type="bigint" remarks="Выбранный кот">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

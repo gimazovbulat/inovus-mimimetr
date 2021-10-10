@@ -1,0 +1,15 @@
+
+POST localhost:8080/api/v1/cats/chosen
+Authorization: Basic dXNlcjoxMjM=
+Content-Type: application/json
+
+{
+  "pair": {
+    "cat1Id": 4,
+    "cat2Id": 5
+  },
+  "chosenCatId": 4
+}
+
+###
+
